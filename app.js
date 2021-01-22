@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const layout = require('./views/layout.js');
 const { db, Page, User } = require('./models');
 const wikiRouter = require('./routes/wiki');
-const userRouter = require('./routes/user');
+const userRouter = require('./routes/users');
 const app = express();
 
 db.authenticate().then(() => {
@@ -17,7 +17,7 @@ app.use('/wiki', wikiRouter);
 app.use('/user', userRouter);
 
 app.get('/', function (req, res) {
-  res.send(layout('hello world'));
+  res.redirect('/wiki');
 });
 
 const initalizedb = async () => {

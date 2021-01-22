@@ -25,6 +25,8 @@ const Page = db.define('page', {
   slug: {
     type: Sequelize.STRING,
     isAlphanumeric: true,
+    allowNull: false,
+
     // defaultValue: this.title.split(' ').join(''),
   },
   content: {
@@ -37,6 +39,10 @@ const Page = db.define('page', {
       isIn: [['open', 'closed']],
     },
   },
+});
+
+Page.beforeValidate(function (page, options) {
+  page.slug = page.title.replace(/\s/g, '_').replace(/\W/g, '');
 });
 
 module.exports = {
